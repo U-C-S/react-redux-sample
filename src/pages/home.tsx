@@ -1,3 +1,4 @@
+import { Group } from "@mantine/core";
 import { useListState } from "@mantine/hooks";
 import { DragDropContext } from "react-beautiful-dnd";
 import Bucket from "../components/bucket";
@@ -11,7 +12,9 @@ export default function HomePage({ data }: { data: CardType[] }) {
       onDragEnd={({ destination, source }) =>
         handlers.reorder({ from: source.index, to: destination?.index || 0 })
       }>
-      <Bucket name="To Do" cards={state} />
+      <Group position="center">
+        <Bucket name="To Do" cards={state} />
+      </Group>
     </DragDropContext>
   );
 }

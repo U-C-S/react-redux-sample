@@ -1,7 +1,8 @@
-import { Button, Card, Text, Group } from "@mantine/core";
+import { Button, Card, Text, Group, ActionIcon, Divider } from "@mantine/core";
 import { CardCollection } from "../types";
 import { Droppable } from "react-beautiful-dnd";
 import CardComponent from "./card";
+import { IconEdit, IconPlus } from "@tabler/icons-react";
 
 interface BucketProps {
   cards: CardCollection;
@@ -11,18 +12,26 @@ interface BucketProps {
 export default function Bucket({ name, cards }: BucketProps) {
   return (
     <Card withBorder w={350} m={10}>
-      <Card.Section>
+      <Card.Section p={10}>
         <Group position="apart">
           <Text>{name}</Text>
-          <Button>+</Button>
+          <Group>
+            <ActionIcon color="dark">
+              <IconEdit />
+            </ActionIcon>
+            <ActionIcon color="dark">
+              <IconPlus />
+            </ActionIcon>
+          </Group>
         </Group>
+        <Divider m={10} />
       </Card.Section>
-      <Card.Section>
-        <Droppable droppableId="{name}" direction="vertical">
+      <Card.Section p={10}>
+        <Droppable droppableId={name} direction="vertical">
           {(provided) => (
             <div {...provided.droppableProps} ref={provided.innerRef}>
               {cards.map((card, index) => (
-                <CardComponent item={card} index={index} />
+                <CardComponent item={card} index={index} key={card.name} />
               ))}
               {provided.placeholder}
             </div>
