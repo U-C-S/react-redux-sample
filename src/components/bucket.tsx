@@ -1,33 +1,33 @@
-import { useState } from "react";
-import {
-  Button,
-  Card,
-  Text,
-  Modal,
-  Input,
-  Select,
-} from "@mantine/core";
+import { Button, Card, Text, Group } from "@mantine/core";
+import { CardCollection } from "../types";
+import { Droppable } from "react-beautiful-dnd";
+import CardComponent from "./card";
 
-export default function Bucket({
-  name,
-  cards,
-  renameBucket,
-  addCard,
-  deleteBucket,
-}) {
+interface BucketProps {
+  cards: CardCollection;
+  name: string;
+}
+
+export default function Bucket({ name, cards }: BucketProps) {
   return (
-    <Card shadow="sm" padding="md">
+    <Card withBorder w={350} m={10}>
       <Card.Section>
-        <Text>{name}</Text>
+        <Group position="apart">
+          <Text>{name}</Text>
+          <Button>+</Button>
+        </Group>
       </Card.Section>
       <Card.Section>
-        <Text>Card 1</Text>
-        <Text>Card 2</Text>
-        <Text>Card 3</Text>
-      </Card.Section>
-      <Card.Section>
-        <Button>+</Button>
-        <Button>-</Button>
+        <Droppable droppableId="{name}" direction="vertical">
+          {(provided) => (
+            <div {...provided.droppableProps} ref={provided.innerRef}>
+              {cards.map((card, index) => (
+                <CardComponent item={card} index={index} />
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
       </Card.Section>
     </Card>
   );
