@@ -1,7 +1,7 @@
 import { createStyles, rem, Text } from "@mantine/core";
 import { IconGripVertical } from "@tabler/icons-react";
 import { Draggable } from "react-beautiful-dnd";
-import { CardType } from "../types";
+import { CardData } from "../types";
 
 const useStyles = createStyles((theme) => ({
   item: {
@@ -38,7 +38,7 @@ const useStyles = createStyles((theme) => ({
 }));
 
 interface CardProps {
-  item: CardType;
+  item: CardData;
   index: number;
 }
 

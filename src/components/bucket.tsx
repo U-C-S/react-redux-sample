@@ -1,11 +1,11 @@
 import { Button, Card, Text, Group, ActionIcon, Divider } from "@mantine/core";
-import { CardCollection } from "../types";
+import { Bucket } from "../types";
 import { Droppable } from "react-beautiful-dnd";
 import CardComponent from "./card";
 import { IconEdit, IconPlus } from "@tabler/icons-react";
 
 interface BucketProps {
-  cards: CardCollection;
+  cards: Bucket;
   name: string;
 }
 

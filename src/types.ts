@@ -1,8 +1,16 @@
-export interface CardType {
-  position: number;
+export interface CardData {
   name: string;
-  // link: number;
-  // type: string;
+  link: string;
+  type: CardType;
+  id: number;
 }
 
-export type CardCollection = CardType[];
+export interface Bucket {
+  name: string;
+  cards: CardData[];
+}
+
+export enum CardType {
+  video = "video",
+  audio = "audio",
+}

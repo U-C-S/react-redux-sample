@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { MantineProvider, Text } from "@mantine/core";
 import HomePage from "./pages/home";
+import QuoteApp from "./pages/dnd";
 
 /*
 const router = createBrowserRouter([
@@ -33,7 +34,8 @@ function App() {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
       <Text>Welcome to Mantine!</Text>
-      <HomePage data={sampleData} />
+      {/* <HomePage data={sampleData} /> */}
+      <QuoteApp />
     </MantineProvider>
   );
 }
