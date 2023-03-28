@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, configureStore } from "@reduxjs/toolkit";
 import { DropResult } from "react-beautiful-dnd";
-import { Bucket, CardType } from "../types";
+import { Bucket, CardData, CardType } from "../types";
 import { reorder, move } from "./rearrangeCards";
 
 const sampleData: Bucket = {
@@ -88,6 +88,9 @@ const BucketSlice = createSlice({
         state.buckets = newState.filter((group) => group.cards.length);
       }
     },
+    addCard: (state, action: PayloadAction<{ bucketIndex: number; card: CardData }>) => {
+      state.buckets[action.payload.bucketIndex].cards.push(action.payload.card);
+    },
   },
 });
 
@@ -97,4 +100,4 @@ export const bucketStore = configureStore({
   },
 });
 
-export const { addBucket, moveCard } = BucketSlice.actions;
+export const { addBucket, moveCard, addCard } = BucketSlice.actions;

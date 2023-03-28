@@ -1,8 +1,10 @@
 import { Card, Text, Group, ActionIcon, Divider, Stack } from "@mantine/core";
-import { Bucket } from "../types";
+import { Bucket, CardType } from "../types";
 import { Droppable } from "react-beautiful-dnd";
 import CardComponent from "./card";
 import { IconEdit, IconPlus } from "@tabler/icons-react";
+import { useDispatch } from "react-redux";
+import { addCard } from "../utils/bucketStore";
 
 interface IColumnProps {
   ind: number;
@@ -10,6 +12,8 @@ interface IColumnProps {
 }
 
 export default function BucketComponent({ ind, el }: IColumnProps) {
+  const dispatch = useDispatch();
+
   return (
     <Card withBorder w={320}>
       <Card.Section p={10}>
@@ -19,7 +23,21 @@ export default function BucketComponent({ ind, el }: IColumnProps) {
             <ActionIcon color="dark">
               <IconEdit />
             </ActionIcon>
-            <ActionIcon color="dark">
+            <ActionIcon
+              color="dark"
+              onClick={() =>
+                dispatch(
+                  addCard({
+                    bucketIndex: ind,
+                    card: {
+                      id: Math.random(),
+                      name: "New card",
+                      type: CardType.audio,
+                      link: "https://www.youtube.com/watch?v=QH2-TGUlwu4",
+                    },
+                  })
+                )
+              }>
               <IconPlus />
             </ActionIcon>
           </Group>

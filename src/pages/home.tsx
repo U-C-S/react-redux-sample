@@ -10,10 +10,6 @@ export default function HomePage({ bucketData }: { bucketData: Bucket[] }) {
   // const [state, setState] = useState(bucketData);
   const dispatch = useDispatch();
 
-  function onDragEnd(result: DropResult) {
-    dispatch(moveCard(result));
-  }
-
   return (
     <Container bg={"#e3ceb9"} p={10}>
       <button
@@ -31,7 +27,7 @@ export default function HomePage({ bucketData }: { bucketData: Bucket[] }) {
         Add new item
       </button> */}
       <Group position="center">
-        <DragDropContext onDragEnd={onDragEnd}>
+        <DragDropContext onDragEnd={(r) => dispatch(moveCard(r))}>
           {bucketData.map((el, ind) => (
             <BucketComponent ind={ind} el={el} />
           ))}
