@@ -43,25 +43,9 @@ const getItemStyle = (isDragging: boolean, draggableStyle: DraggingStyle | undef
 });
 
 export default function CardComponent({ item, index }: CardProps) {
-  const { classes, cx } = useStyles();
+  const { classes } = useStyles();
 
   return (
-    // <Draggable key={item.name} index={index} draggableId={item.name}>
-    //   {(provided, snapshot) => (
-    //     <div
-    //       className={cx(classes.item, {
-    //         [classes.itemDragging]: snapshot.isDragging,
-    //       })}
-    //       ref={provided.innerRef}
-    //       {...provided.draggableProps}>
-    //       <div className={classes.dragHandle} {...provided.dragHandleProps}>
-    //         <IconGripVertical size="1.05rem" stroke={1.5} />
-    //       </div>
-    //       <Text>{item.name}</Text>
-    //     </div>
-    //   )}
-    // </Draggable>
-
     <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
       {(provided, snapshot) => (
         <Card

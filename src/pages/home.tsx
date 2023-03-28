@@ -2,7 +2,7 @@ import { Container, Group } from "@mantine/core";
 import { useState } from "react";
 import { DragDropContext, DropResult, DraggableLocation } from "react-beautiful-dnd";
 import BucketComponent from "../components/bucket";
-import { Bucket, CardData, CardType } from "../types";
+import { Bucket, CardType } from "../types";
 
 const reorder = (list: Bucket, startIndex: number, endIndex: number) => {
   const result = Array.from(list.cards);
@@ -13,9 +13,6 @@ const reorder = (list: Bucket, startIndex: number, endIndex: number) => {
   return list;
 };
 
-/**
- * Moves an item from one list to another list.
- */
 const move = (
   source: Bucket,
   destination: Bucket,
@@ -39,55 +36,8 @@ const move = (
   return result;
 };
 
-const sampleData: Bucket = {
-  name: "Movies",
-  cards: [
-    {
-      id: 1,
-      name: "Hydro-gen",
-      type: CardType.video,
-      link: "https://www.youtube.com/watch?v=Z1ktxiqyiLA",
-    },
-    {
-      id: 3,
-      name: "Hydro Monkey",
-      type: CardType.video,
-      link: "https://www.youtube.com/watch?v=Z1ktxiqyiLA",
-    },
-    {
-      id: 4,
-      name: "Uranium Music",
-      type: CardType.audio,
-      link: "https://www.youtube.com/watch?v=Z1ktxiqyiLA",
-    },
-  ],
-};
-const sampleData2: Bucket = {
-  name: "Cats",
-  cards: [
-    {
-      id: 2,
-      name: "Helium",
-      type: CardType.video,
-      link: "https://www.youtube.com/watch?v=Z1ktxiqyiLA",
-    },
-    {
-      id: 5,
-      name: "Lithium",
-      type: CardType.video,
-      link: "https://www.youtube.com/watch?v=Z1ktxiqyiLA",
-    },
-    {
-      id: 6,
-      name: "Beryllium",
-      type: CardType.video,
-      link: "https://www.youtube.com/watch?v=Z1ktxiqyiLA",
-    },
-  ],
-};
-
-export default function HomePage() {
-  const [state, setState] = useState([sampleData, sampleData2]);
+export default function HomePage({ bucketData }: { bucketData: Bucket[] }) {
+  const [state, setState] = useState(bucketData);
 
   function onDragEnd(result: DropResult) {
     const { source, destination } = result;
