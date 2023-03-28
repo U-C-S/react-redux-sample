@@ -1,59 +1,14 @@
-import { useState } from "react";
-import { MantineProvider, Text } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 import HomePage from "./pages/home";
-import { Bucket, CardType } from "./types";
-
-const sampleData: Bucket = {
-  name: "Movies",
-  cards: [
-    {
-      id: 1,
-      name: "Hydro-gen",
-      type: CardType.video,
-      link: "https://www.youtube.com/watch?v=Z1ktxiqyiLA",
-    },
-    {
-      id: 3,
-      name: "Hydro Monkey",
-      type: CardType.video,
-      link: "https://www.youtube.com/watch?v=Z1ktxiqyiLA",
-    },
-    {
-      id: 4,
-      name: "Uranium Music",
-      type: CardType.audio,
-      link: "https://www.youtube.com/watch?v=Z1ktxiqyiLA",
-    },
-  ],
-};
-const sampleData2: Bucket = {
-  name: "Cats",
-  cards: [
-    {
-      id: 2,
-      name: "Helium",
-      type: CardType.video,
-      link: "https://www.youtube.com/watch?v=Z1ktxiqyiLA",
-    },
-    {
-      id: 5,
-      name: "Lithium",
-      type: CardType.video,
-      link: "https://www.youtube.com/watch?v=Z1ktxiqyiLA",
-    },
-    {
-      id: 6,
-      name: "Beryllium",
-      type: CardType.video,
-      link: "https://www.youtube.com/watch?v=Z1ktxiqyiLA",
-    },
-  ],
-};
+import { useSelector } from "react-redux";
+import { bucketStore } from "./utils/bucketStore";
 
 function App() {
+  const bucketData = useSelector((state: ReturnType<typeof bucketStore.getState>) => state.bucket.buckets);
+
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
-      <HomePage bucketData={[sampleData, sampleData2]} />
+      <HomePage bucketData={bucketData} />
     </MantineProvider>
   );
 }

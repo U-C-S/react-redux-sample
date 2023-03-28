@@ -5,18 +5,8 @@ import { CardData } from "../types";
 
 const useStyles = createStyles((theme) => ({
   item: {
-    backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.white,
+    backgroundColor: theme.colors.dark[5],
     marginBottom: theme.spacing.sm,
-  },
-
-  itemDragging: {
-    boxShadow: theme.shadows.sm,
-  },
-
-  symbol: {
-    fontSize: rem(30),
-    fontWeight: 700,
-    width: rem(60),
   },
 
   dragHandle: {
@@ -25,9 +15,7 @@ const useStyles = createStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     height: "100%",
-    color: theme.colorScheme === "dark" ? theme.colors.dark[1] : theme.colors.gray[6],
-    paddingLeft: theme.spacing.md,
-    paddingRight: theme.spacing.md,
+    color: theme.colors.dark[1],
   },
 }));
 
@@ -35,12 +23,6 @@ interface CardProps {
   item: CardData;
   index: number;
 }
-const grid = 8;
-
-const getItemStyle = (isDragging: boolean, draggableStyle: DraggingStyle | undefined | NotDraggingStyle) => ({
-  userSelect: "none",
-  ...draggableStyle,
-});
 
 export default function CardComponent({ item, index }: CardProps) {
   const { classes } = useStyles();
@@ -52,7 +34,7 @@ export default function CardComponent({ item, index }: CardProps) {
           withBorder
           ref={provided.innerRef}
           {...provided.draggableProps}
-          style={getItemStyle(snapshot.isDragging, provided.draggableProps.style) as any}>
+          style={provided.draggableProps.style}>
           <Group>
             <div className={classes.dragHandle} {...provided.dragHandleProps}>
               <IconGripVertical size="1rem" stroke={1.5} />
