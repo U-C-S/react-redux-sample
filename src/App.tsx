@@ -33,8 +33,6 @@ function App() {
 
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
-      <Text>Welcome to Mantine!</Text>
-      {/* <HomePage data={sampleData} /> */}
       <QuoteApp />
     </MantineProvider>
   );
