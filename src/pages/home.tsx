@@ -1,13 +1,7 @@
+import { Container, Group } from "@mantine/core";
 import { useState } from "react";
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-  DropResult,
-  DraggableLocation,
-  DraggingStyle,
-  NotDraggingStyle,
-} from "react-beautiful-dnd";
+import { DragDropContext, DropResult, DraggableLocation } from "react-beautiful-dnd";
+import BucketComponent from "../components/bucket";
 import { Bucket, CardData, CardType } from "../types";
 
 const reorder = (list: Bucket, startIndex: number, endIndex: number) => {
@@ -44,25 +38,6 @@ const move = (
 
   return result;
 };
-const grid = 8;
-
-const getItemStyle = (isDragging: boolean, draggableStyle: DraggingStyle | undefined | NotDraggingStyle) => ({
-  // some basic styles to make the items look a bit nicer
-  userSelect: "none",
-  padding: grid * 2,
-  margin: `0 0 ${grid}px 0`,
-
-  // change background colour if dragging
-  background: isDragging ? "lightgreen" : "grey",
-
-  // styles we need to apply on draggables
-  ...draggableStyle,
-});
-const getListStyle = (isDraggingOver: boolean) => ({
-  background: isDraggingOver ? "lightblue" : "lightgrey",
-  padding: grid,
-  width: 250,
-});
 
 const sampleData: Bucket = {
   name: "Movies",
@@ -111,7 +86,7 @@ const sampleData2: Bucket = {
   ],
 };
 
-export default function QuoteApp() {
+export default function HomePage() {
   const [state, setState] = useState([sampleData, sampleData2]);
 
   function onDragEnd(result: DropResult) {
@@ -141,7 +116,7 @@ export default function QuoteApp() {
   }
 
   return (
-    <div>
+    <Container bg={"#e3ceb9"} p={10}>
       <button
         type="button"
         onClick={() => {
@@ -156,74 +131,13 @@ export default function QuoteApp() {
         }}>
         Add new item
       </button> */}
-      <div style={{ display: "flex" }}>
+      <Group position="center">
         <DragDropContext onDragEnd={onDragEnd}>
           {state.map((el, ind) => (
-            <Column ind={ind} el={el} />
+            <BucketComponent ind={ind} el={el} />
           ))}
         </DragDropContext>
-      </div>
-    </div>
-  );
-}
-
-// const rootElement = document.getElementById("root");
-// ReactDOM.render(<QuoteApp />, rootElement);
-
-interface IColumnProps {
-  ind: number;
-  el: Bucket;
-}
-
-function Column({ ind, el }: IColumnProps) {
-  return (
-    <Droppable key={ind} droppableId={`${ind}`}>
-      {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          style={getListStyle(snapshot.isDraggingOver)}
-          {...provided.droppableProps}>
-          {el.cards.map((item, index) => (
-            <Item item={item} index={index} />
-          ))}
-        </div>
-      )}
-    </Droppable>
-  );
-}
-
-interface ItemProps {
-  item: CardData;
-  index: number;
-}
-
-function Item({ item, index }: ItemProps) {
-  return (
-    <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
-      {(provided, snapshot) => (
-        <div
-          ref={provided.innerRef}
-          {...provided.draggableProps}
-          {...provided.dragHandleProps}
-          style={getItemStyle(snapshot.isDragging, provided.draggableProps.style) as any}>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-around",
-            }}>
-            {item.name}
-            <button
-              type="button"
-              onClick={() => {
-                // const newState = [...state];
-                // newState[ind].splice(index, 1);
-                // setState(newState.filter((group) => group.length));
-              }}>
-              delete
-            </button>
-          </div>
-        </div>
-      )}
-    </Draggable>
+      </Group>
+    </Container>
   );
 }

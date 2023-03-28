@@ -4,17 +4,17 @@ import { Droppable } from "react-beautiful-dnd";
 import CardComponent from "./card";
 import { IconEdit, IconPlus } from "@tabler/icons-react";
 
-interface BucketProps {
-  cards: Bucket;
-  name: string;
+interface IColumnProps {
+  ind: number;
+  el: Bucket;
 }
 
-export default function Bucket({ name, cards }: BucketProps) {
+export default function BucketComponent({ ind, el }: IColumnProps) {
   return (
-    <Card withBorder w={350} m={10}>
+    <Card withBorder w={250}>
       <Card.Section p={10}>
         <Group position="apart">
-          <Text>{name}</Text>
+          <Text>{el.name}</Text>
           <Group>
             <ActionIcon color="dark">
               <IconEdit />
@@ -27,13 +27,12 @@ export default function Bucket({ name, cards }: BucketProps) {
         <Divider m={10} />
       </Card.Section>
       <Card.Section p={10}>
-        <Droppable droppableId={name} direction="vertical">
-          {(provided) => (
-            <div {...provided.droppableProps} ref={provided.innerRef}>
-              {cards.map((card, index) => (
-                <CardComponent item={card} index={index} key={card.name} />
+        <Droppable key={ind} droppableId={`${ind}`}>
+          {(provided, snapshot) => (
+            <div ref={provided.innerRef} {...provided.droppableProps}>
+              {el.cards.map((item, index) => (
+                <CardComponent item={item} index={index} />
               ))}
-              {provided.placeholder}
             </div>
           )}
         </Droppable>

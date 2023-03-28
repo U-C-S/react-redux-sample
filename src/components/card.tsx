@@ -1,16 +1,10 @@
-import { createStyles, rem, Text } from "@mantine/core";
+import { Card, createStyles, Group, rem, Text } from "@mantine/core";
 import { IconGripVertical } from "@tabler/icons-react";
-import { Draggable } from "react-beautiful-dnd";
+import { Draggable, DraggingStyle, NotDraggingStyle } from "react-beautiful-dnd";
 import { CardData } from "../types";
 
 const useStyles = createStyles((theme) => ({
   item: {
-    display: "flex",
-    alignItems: "center",
-    borderRadius: theme.radius.md,
-    border: `${rem(1)} solid ${theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.colors.gray[2]}`,
-    padding: `${theme.spacing.sm} ${theme.spacing.xl}`,
-    paddingLeft: `calc(${theme.spacing.xl} - ${theme.spacing.md})`, // to offset drag handle
     backgroundColor: theme.colorScheme === "dark" ? theme.colors.dark[5] : theme.white,
     marginBottom: theme.spacing.sm,
   },
@@ -41,24 +35,56 @@ interface CardProps {
   item: CardData;
   index: number;
 }
+const grid = 8;
+
+const getItemStyle = (isDragging: boolean, draggableStyle: DraggingStyle | undefined | NotDraggingStyle) => ({
+  userSelect: "none",
+  ...draggableStyle,
+});
 
 export default function CardComponent({ item, index }: CardProps) {
   const { classes, cx } = useStyles();
 
   return (
-    <Draggable key={item.name} index={index} draggableId={item.name}>
+    // <Draggable key={item.name} index={index} draggableId={item.name}>
+    //   {(provided, snapshot) => (
+    //     <div
+    //       className={cx(classes.item, {
+    //         [classes.itemDragging]: snapshot.isDragging,
+    //       })}
+    //       ref={provided.innerRef}
+    //       {...provided.draggableProps}>
+    //       <div className={classes.dragHandle} {...provided.dragHandleProps}>
+    //         <IconGripVertical size="1.05rem" stroke={1.5} />
+    //       </div>
+    //       <Text>{item.name}</Text>
+    //     </div>
+    //   )}
+    // </Draggable>
+
+    <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
       {(provided, snapshot) => (
-        <div
-          className={cx(classes.item, {
-            [classes.itemDragging]: snapshot.isDragging,
-          })}
+        <Card
+          withBorder
           ref={provided.innerRef}
-          {...provided.draggableProps}>
-          <div className={classes.dragHandle} {...provided.dragHandleProps}>
-            <IconGripVertical size="1.05rem" stroke={1.5} />
-          </div>
-          <Text>{item.name}</Text>
-        </div>
+          {...provided.draggableProps}
+          style={getItemStyle(snapshot.isDragging, provided.draggableProps.style) as any}>
+          <Group>
+            <div className={classes.dragHandle} {...provided.dragHandleProps}>
+              <IconGripVertical size="1rem" stroke={1.5} />
+            </div>
+            <Text>{item.name}</Text>
+            {/* <button
+              type="button"
+              onClick={() => {
+                // const newState = [...state];
+                // newState[ind].splice(index, 1);
+                // setState(newState.filter((group) => group.length));
+              }}>
+              delete
+            </button> */}
+          </Group>
+        </Card>
       )}
     </Draggable>
   );
